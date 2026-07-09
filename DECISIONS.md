@@ -48,3 +48,21 @@ claims; the smoke tests pin the rank-order behaviour they illustrate.
 2026-07-09 — Chart palettes validated with the dataviz six-checks script:
 light #2E6E9E/#B4533A on #FBFBF9; dark #4A8BC4/#C96A4E on #16181D. All pass
 (CVD ΔE ≥ 49; contrast ≥ 3:1).
+
+2026-07-09 — Tab 1 rebuilt for interpretability after Brett's review ("no idea
+what I'm looking at"). Root cause: the first version plotted estimator
+internals (C, ν, streams) with no visible evidence and no on-ramp. Changes:
+(a) the display now runs on sampled discrete occasions (seeded mulberry32,
+Poisson opportunities) with an event feed and running tallies, so the evidence
+that moves the posterior is on screen; the deterministic expectation stays as
+a dotted overlay and remains the tested path; (b) every surface is
+plain-language first (sliders as questions, tiles as words: best guess,
+weight of evidence, still plausible), symbols demoted to the footer;
+(c) each preset is framed as a question with a one-line what-to-watch caption.
+Shipped preset seeds are pinned by smoke tests to display the profile their
+caption promises.
+
+2026-07-09 — Sampled-mode occasion model: Poisson(N_t) occasions per step;
+each occasion is heard (prob π), workaround ((1−π)·ω, contributes nothing),
+or competitor choice ((1−π)·(1−ω), contributes ρ⋆). Expectations match the
+deterministic mapping exactly; verified by a 40-seed convergence check.

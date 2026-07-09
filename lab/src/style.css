@@ -137,17 +137,27 @@ main { display: grid; grid-template-columns: 296px minmax(0, 1fr); gap: 18px; }
   text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink3);
 }
 
+.orient { max-width: 76ch; color: var(--ink2); font-size: 14px; margin: 0 0 14px; }
+.orient strong { color: var(--ink); font-weight: 600; }
+
+.preset-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
 .preset {
-  display: block; width: 100%; text-align: left; margin-bottom: 6px;
-  border: 1px solid var(--panel-edge); background: transparent; color: var(--ink);
+  flex: 1; min-width: 150px; text-align: left;
+  border: 1px solid var(--panel-edge); background: var(--panel); color: var(--ink);
   border-radius: 8px; padding: 7px 10px; cursor: pointer; font-size: 13.5px;
 }
 .preset:hover { border-color: var(--data1); }
-.preset.active { border-color: var(--data1); box-shadow: inset 2px 0 0 var(--data1); }
+.preset.active { border-color: var(--data1); box-shadow: inset 0 -2px 0 var(--data1); }
 .preset .ex { display: block; color: var(--ink2); font-size: 12.5px; }
-.preset .ex .mark { font-style: normal; color: var(--data2); }
+.preset .ex .mark, .banner .mark { font-style: normal; color: var(--data2); }
 
-.blurb { margin: 8px 0 0; color: var(--ink2); font-size: 12.5px; }
+.banner {
+  background: var(--panel); border: 1px solid var(--panel-edge);
+  border-left: 3px solid var(--data1); border-radius: 10px;
+  padding: 11px 15px; margin-bottom: 16px;
+}
+.banner .q { margin: 0; font-size: 16.5px; font-weight: 600; }
+.banner .watch { margin: 4px 0 0; color: var(--ink2); font-size: 13.5px; max-width: 82ch; }
 
 .slider-row { margin-bottom: 10px; }
 .slider-row label {
@@ -158,6 +168,35 @@ main { display: grid; grid-template-columns: 296px minmax(0, 1fr); gap: 18px; }
   font-variant-numeric: tabular-nums; color: var(--ink); font-size: 13px;
 }
 .slider-row input[type="range"] { width: 100%; accent-color: var(--data1); margin: 0; }
+.slider-row label { gap: 8px; }
+.slider-row label > span:first-child { flex: 1; }
+.symnote { color: var(--ink3); font-size: 11.5px; }
+
+details.world {
+  background: var(--panel); border: 1px solid var(--panel-edge);
+  border-radius: 10px; padding: 10px 14px; margin-bottom: 12px;
+}
+details.world summary {
+  cursor: pointer; font-size: 11.5px; font-weight: 650;
+  text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink3);
+}
+details.world[open] summary { margin-bottom: 10px; }
+
+.feed {
+  display: flex; flex-direction: column; gap: 3px; margin-top: 9px;
+  max-height: 245px; overflow-y: auto;
+  font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--ink2);
+}
+.feed .for, .tallies .for { color: var(--data1); font-weight: 600; }
+.feed .against, .tallies .against { color: var(--data2); font-weight: 600; }
+.feed .meh { color: var(--ink3); }
+.feed .frame { color: var(--data2); font-weight: 600; }
+
+.tallies { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.tally {
+  font-size: 11.5px; border: 1px solid var(--panel-edge); border-radius: 999px;
+  padding: 2px 9px; color: var(--ink2); font-variant-numeric: tabular-nums;
+}
 
 .btn {
   border: 1px solid var(--panel-edge); background: var(--panel); color: var(--ink);
@@ -184,6 +223,7 @@ main { display: grid; grid-template-columns: 296px minmax(0, 1fr); gap: 18px; }
 .stat .k { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink3); }
 .stat .v { font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; margin-top: 2px; }
 .stat .v small { font-size: 12px; font-weight: 400; color: var(--ink2); }
+.stat .g { font-size: 11px; color: var(--ink3); margin-top: 2px; }
 
 .chip {
   display: inline-block; border-radius: 999px; padding: 3px 11px;
@@ -217,6 +257,7 @@ main { display: grid; grid-template-columns: 296px minmax(0, 1fr); gap: 18px; }
 .axislabel { fill: var(--ink2); font-size: 12px; }
 .ribbon { fill: var(--ribbon); }
 .meanline { stroke: var(--data1); stroke-width: 2; fill: none; }
+.expectedline { stroke: var(--data1); stroke-width: 1.25; fill: none; stroke-dasharray: 1.5 4; opacity: 0.65; }
 .nowdot { fill: var(--data1); stroke: var(--panel); stroke-width: 2; }
 .framingline { stroke: var(--data2); stroke-width: 1.5; stroke-dasharray: 4 3; }
 .framingtext { fill: var(--data2); font-size: 11px; font-weight: 600; }
@@ -228,6 +269,8 @@ main { display: grid; grid-template-columns: 296px minmax(0, 1fr); gap: 18px; }
 .ghosttext { fill: var(--ink3); font-size: 11px; }
 .directlabel { fill: var(--data1); font-size: 11.5px; font-weight: 600; }
 .ribbonlabel { fill: var(--ink2); font-size: 11px; }
+
+.caption { font-size: 12.5px; color: var(--ink2); margin: 7px 2px 5px; max-width: 82ch; }
 
 details.data { margin-bottom: 12px; }
 details.data summary { cursor: pointer; color: var(--ink2); font-size: 13px; padding: 4px 2px; }

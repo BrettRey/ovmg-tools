@@ -2,74 +2,94 @@
   <header class="top">
     <div>
       <h1>OVMG Licensing Lab</h1>
-      <p class="sub">Companion to <em>Grammaticality de-idealized</em> — the licensing posterior of the Operator-Value Model, live.</p>
+      <p class="sub">Companion to <em>Grammaticality de-idealized</em>.</p>
     </div>
     <nav class="tabs" aria-label="Lab tabs">
-      <button class="tab active" aria-current="page">1 · Single node</button>
+      <button class="tab active" aria-current="page">1 · Single expression</button>
       <button class="tab" disabled title="Planned">2 · Population</button>
       <button class="tab" disabled title="Planned">3 · Diagnostic tree</button>
     </nav>
   </header>
 
+  <p class="orient">A speech community never votes on what’s grammatical. Evidence
+  just accumulates: each occasion where an expression could be used ends with
+  someone <strong>using it</strong>, using a <strong>competitor</strong> instead,
+  or <strong>talking around it</strong>. Pick a case and watch what a learner
+  could conclude from that evidence, and how firmly.</p>
+
+  <div class="preset-row" id="presets" role="group" aria-label="Worked examples"></div>
+
+  <div class="banner">
+    <p class="q" id="bannerQ"></p>
+    <p class="watch" id="bannerWatch"></p>
+  </div>
+
   <main>
     <aside class="rail">
-      <section aria-labelledby="h-presets">
-        <h2 id="h-presets">Worked examples</h2>
-        <div id="presets"></div>
-        <p class="blurb" id="presetBlurb"></p>
-      </section>
-
-      <section aria-labelledby="h-params">
-        <h2 id="h-params">Parameters</h2>
-        <div id="sliders"></div>
+      <section aria-labelledby="h-feed">
+        <h2 id="h-feed">What’s happening</h2>
+        <div class="playrow">
+          <button class="btn primary" id="playBtn">Play</button>
+          <button class="btn" id="resampleBtn" title="Draw a fresh run of occasions from the same world">Resample</button>
+        </div>
+        <div class="trow">
+          <span>step</span>
+          <input type="range" id="scrub" min="0" max="120" step="1" value="0" aria-label="Exposure step">
+          <output id="tOut">0</output>
+        </div>
+        <div class="feed" id="feed" aria-live="off"></div>
+        <div class="tallies" id="tallies"></div>
       </section>
 
       <section aria-labelledby="h-events">
-        <h2 id="h-events">Events</h2>
-        <button class="btn framing" id="framingBtn">Inject framing shift</button>
-        <span class="hint">Adds +2 positive pseudo-counts at the current step. Diffuse posteriors jump; concentrated ones don't — the satiation rank order.</span>
+        <h2 id="h-events">Nudge the learner</h2>
+        <button class="btn framing" id="framingBtn">Friendly frame (+2 imagined uses)</button>
+        <span class="hint">Presents the expression in a supportive context. If the
+        verdict rests on thin evidence, the guess jumps; if hundreds of
+        observations back it, nothing moves. That’s why repetition and framing
+        budge some judgments and not others.</span>
       </section>
 
-      <section aria-labelledby="h-play">
-        <h2 id="h-play">Playback</h2>
-        <div class="playrow">
-          <button class="btn primary" id="playBtn">Play</button>
-          <button class="btn" id="resetBtn">Reset</button>
-        </div>
-        <div class="trow">
-          <span class="var">t</span>
-          <input type="range" id="scrub" min="0" max="120" step="1" value="0"
-                 aria-label="Time step">
-          <output id="tOut">0</output>
-        </div>
-      </section>
+      <details class="world">
+        <summary>Adjust the world</summary>
+        <div id="sliders"></div>
+        <p class="hint">These set the community the learner hears. Changing them
+        switches the banner to a custom world.</p>
+      </details>
     </aside>
 
     <section class="stage">
       <div class="readout" id="readout">
-        <div class="stat"><div class="k">Status</div><div class="v"><span class="chip set" id="chip">—</span></div></div>
-        <div class="stat"><div class="k">Mean <span class="var">C</span></div><div class="v" id="roMean">—</div></div>
-        <div class="stat"><div class="k">Concentration <span class="var">ν</span></div><div class="v" id="roNu">—</div></div>
-        <div class="stat"><div class="k">95% CrI</div><div class="v" id="roCri">—</div></div>
-        <div class="stat"><div class="k">Streams / step</div><div class="v" id="roStreams">—</div></div>
+        <div class="stat"><div class="k">Verdict so far</div><div class="v"><span class="chip set" id="chip">—</span></div><div class="g" id="chipGloss"></div></div>
+        <div class="stat"><div class="k">Best guess</div><div class="v" id="roMean">—</div><div class="g">share of the community that licenses it</div></div>
+        <div class="stat"><div class="k">Weight of evidence</div><div class="v" id="roNu">—</div><div class="g">effective observations behind the guess</div></div>
+        <div class="stat"><div class="k">Still plausible</div><div class="v" id="roCri">—</div><div class="g">range the evidence hasn’t ruled out</div></div>
       </div>
 
       <div class="panelbox">
-        <h2>Licensing posterior trajectory — mean with 95% credible ribbon</h2>
+        <h2>What the learner concludes</h2>
         <div class="chartbox">
           <svg id="trajSvg" viewBox="0 0 860 300" role="img"
-               aria-label="Posterior mean trajectory with 95 percent credible ribbon over time"></svg>
+               aria-label="The learner's best guess over exposure, with the range still plausible as a shaded band"></svg>
           <div class="tip" id="trajTip"></div>
         </div>
+        <p class="caption">Solid line: the best guess at how much of the community
+        licenses the expression. Shaded band: what the evidence so far still
+        allows. Dotted: the path if evidence arrived exactly on average.</p>
       </div>
 
       <div class="panelbox">
-        <h2>Status state space — mean × concentration (paper fig. 2)</h2>
+        <h2>The status map (paper fig. 2)</h2>
         <div class="chartbox">
           <svg id="ssSvg" viewBox="0 0 860 330" role="img"
-               aria-label="State space: posterior mean against posterior concentration"></svg>
+               aria-label="Status map: best guess against weight of evidence"></svg>
           <div class="tip" id="ssTip"></div>
         </div>
+        <p class="caption">High and right: licensed. High and left: confidently out.
+        Low anywhere: unsettled, because nothing happens (starved) or because what
+        happens is uninformative (avoidance). A preempted gap and a winnerless cell
+        can share the same low guess; they part on the vertical axis, and that
+        difference is what predicts framing effects, satiation, and change.</p>
       </div>
 
       <details class="data">
@@ -80,14 +100,16 @@
   </main>
 
   <footer class="notes">
-    <p>Numerical core: the shared OVMG Beta engine (paper eqs. 44–47), fixture-tested
-    against the paper's Figure 4; the preempted-gap and starved presets reproduce that
-    figure exactly. Preset slider values are illustrative modelling choices; the
-    qualitative profiles follow the paper's worked examples.</p>
-    <p>Per-step streams: <span class="var">s</span> = <span class="var">N</span>·π (positive tokens),
+    <p>For readers of the paper: best guess = posterior mean <span class="var">C</span>;
+    weight of evidence = concentration <span class="var">ν</span>; band = 95% credible
+    interval; the sliders set <span class="var">N</span>, π, <span class="var">ρ⋆</span>,
+    ω, <span class="var">δ</span><sub>m</sub>, feeding the streams
+    <span class="var">s</span> = <span class="var">N</span>·π and
     <span class="var">p</span> = <span class="var">N</span>·(1−π)·(1−ω)·<span class="var">ρ⋆</span>
-    (preemption mass; ω is the outside-option share, whose omissions have
-    attributability ≈ 0). Heterogeneity is population-level and lives in Tab 2.</p>
+    of eqs. 44–47. The preempted-gap and starved presets reproduce the paper’s
+    Figure 4 exactly in expectation; a sampled run varies around it (Resample
+    draws another community). Preset values are illustrative modelling choices;
+    the qualitative profiles follow the paper’s worked examples.</p>
     <p>Code: <a href="https://github.com/BrettRey/ovmg-tools">github.com/BrettRey/ovmg-tools</a> (MIT).</p>
   </footer>
 </div>

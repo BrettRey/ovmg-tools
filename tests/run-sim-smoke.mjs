@@ -7,7 +7,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { simulate, PRESETS, FRAMING_BOOST } from '../js/sim.js';
+import { simulate, simulateSampled, PRESETS, FRAMING_BOOST } from '../js/sim.js';
 
 let checks = 0;
 let failures = 0;
@@ -85,6 +85,42 @@ for (const sc of fx.scenarios) {
     `mean20 ${t20.mean.toFixed(3)}, mean80 ${t80.mean.toFixed(3)}`);
   ok('moribund: CrI widens', (t80.hi - t80.lo) > (t20.hi - t20.lo),
     `width20 ${(t20.hi - t20.lo).toFixed(3)}, width80 ${(t80.hi - t80.lo).toFixed(3)}`);
+}
+
+// 6. Sampled mode: seeded runs are reproducible, expectations match the
+// deterministic mode, and every shipped preset seed shows the qualitative
+// profile its on-screen caption promises.
+{
+  const r1 = simulateSampled(PRESETS.preempted.params, 50, 7).rows.at(-1);
+  const r2 = simulateSampled(PRESETS.preempted.params, 50, 7).rows.at(-1);
+  ok('sampled: same seed reproduces', r1.a === r2.a && r1.b === r2.b);
+
+  // Expectation consistency: average final b over seeds near deterministic.
+  const SEEDS = 40;
+  let bSum = 0;
+  for (let s = 1; s <= SEEDS; s++) bSum += simulateSampled(PRESETS.preempted.params, 50, s).rows.at(-1).b;
+  const bDet = simulate(PRESETS.preempted.params, 50).at(-1).b;
+  ok('sampled: expectation matches deterministic (8%)',
+    Math.abs(bSum / SEEDS - bDet) / bDet < 0.08,
+    `avg ${(bSum / SEEDS).toFixed(1)} vs ${bDet.toFixed(1)}`);
+
+  const end = (key) => simulateSampled(PRESETS[key].params, 120, PRESETS[key].seed).rows.at(-1);
+  const lic = end('licensed');
+  ok('seeded licensed: mean > 0.85, nu > 40', lic.mean > 0.85 && lic.nu > 40,
+    `mean ${lic.mean.toFixed(3)}, nu ${lic.nu.toFixed(1)}`);
+  const pre = end('preempted');
+  ok('seeded preempted: mean < 0.05, nu > 100', pre.mean < 0.05 && pre.nu > 100,
+    `mean ${pre.mean.toFixed(3)}, nu ${pre.nu.toFixed(1)}`);
+  const sta = end('starved');
+  ok('seeded starved: nu < 6 (almost nothing learned)', sta.nu < 6, `nu ${sta.nu.toFixed(1)}`);
+  const win = end('winnerless');
+  ok('seeded winnerless: mean < 0.45, nu < 12', win.mean < 0.45 && win.nu < 12,
+    `mean ${win.mean.toFixed(3)}, nu ${win.nu.toFixed(1)}`);
+  const mor = simulateSampled(PRESETS.moribund.params, 100, PRESETS.moribund.seed).rows;
+  ok('seeded moribund: nu falls after opportunities dry up', mor[80].nu < 0.8 * mor[20].nu,
+    `nu20 ${mor[20].nu.toFixed(1)}, nu80 ${mor[80].nu.toFixed(1)}`);
+  ok('seeded moribund: CrI widens again', (mor[80].hi - mor[80].lo) > (mor[20].hi - mor[20].lo),
+    `width20 ${(mor[20].hi - mor[20].lo).toFixed(3)}, width80 ${(mor[80].hi - mor[80].lo).toFixed(3)}`);
 }
 
 if (failures > 0) {

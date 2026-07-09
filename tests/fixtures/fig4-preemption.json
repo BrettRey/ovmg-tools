@@ -1,0 +1,35 @@
+{
+  "name": "fig4-preemption",
+  "description": "Licensing posteriors under preemption: rare (sparse opportunities) vs dense preemption. Expected values are the plotted coordinates of Figure 4 (label fig:posterior-means) in Reynolds, 'Grammaticality de-idealized'.",
+  "source": "papers/retarget/grammaticality-de-idealized/section3.tex, pgfplots coordinates (lines 678-695), verified against main.aux (figure 4, p. 31) on 2026-07-09; quantiles cross-checked against the Beta(1,b) closed form x_p = 1 - (1-p)^(1/b).",
+  "prior": { "a": 1, "b": 1 },
+  "params": { "delta_m": 1, "lambda_pos": 1, "lambda_neg": 1 },
+  "cri_level": 0.95,
+  "tolerance": 5e-5,
+  "tolerance_note": "Expected values are rounded to 4 decimal places in the paper's plot coordinates, so agreement within 5e-5 is exact agreement.",
+  "scenarios": [
+    {
+      "id": "rare",
+      "description": "Sparse opportunities: per-step effective preemption mass 0.01, no positive tokens. Posterior stays near the prior; CrI spans nearly the whole unit interval.",
+      "evidence_per_step": { "s": 0, "e": 0, "p": 0.01 },
+      "checks": [
+        { "t": 0, "mean": 0.5, "cri95": [0.025, 0.975] },
+        { "t": 10, "mean": 0.4762, "cri95": [0.0228, 0.965] },
+        { "t": 26, "mean": 0.4425, "cri95": [0.0199, 0.9465] },
+        { "t": 50, "mean": 0.4, "cri95": [0.0167, 0.9145] }
+      ]
+    },
+    {
+      "id": "dense",
+      "description": "Dense preemption: per-step effective preemption mass 5, no positive tokens. Posterior both falls and concentrates.",
+      "evidence_per_step": { "s": 0, "e": 0, "p": 5 },
+      "checks": [
+        { "t": 0, "mean": 0.5, "cri95": [0.025, 0.975] },
+        { "t": 1, "mean": 0.1429, "cri95": [0.0042, 0.4593] },
+        { "t": 5, "mean": 0.037, "cri95": [0.001, 0.1323] },
+        { "t": 10, "mean": 0.0192, "cri95": [0.0005, 0.0698] },
+        { "t": 50, "mean": 0.004, "cri95": [0.0001, 0.0146] }
+      ]
+    }
+  ]
+}

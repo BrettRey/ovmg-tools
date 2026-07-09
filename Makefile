@@ -1,4 +1,8 @@
 test:
 	node tests/run-fixtures.mjs
+	node tests/run-sim-smoke.mjs
 
-.PHONY: test
+lab:
+	node lab/build.mjs
+
+.PHONY: test lab

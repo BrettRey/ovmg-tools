@@ -1,0 +1,963 @@
+<title>OVMG Licensing Lab</title>
+<style>
+/* OVMG Licensing Lab — tokens + layout.
+   Palettes validated (dataviz six checks): light #2E6E9E/#B4533A on #FBFBF9;
+   dark #4A8BC4/#C96A4E on #16181D. */
+
+:root {
+  --surface: #FBFBF9;
+  --panel: #FFFFFF;
+  --panel-edge: #E7E7E1;
+  --ink: #1F2430;
+  --ink2: #5A6170;
+  --ink3: #8B909C;
+  --grid: #ECECE6;
+  --axis: #C9C9C2;
+  --data1: #2E6E9E;
+  --data2: #B4533A;
+  --ribbon: rgba(46, 110, 158, 0.13);
+  --region: rgba(90, 97, 112, 0.06);
+  --region-edge: rgba(90, 97, 112, 0.18);
+  --chip-lic-bg: #E3EFE8; --chip-lic-fg: #2A5C44;
+  --chip-exc-bg: #F4E3DE; --chip-exc-fg: #8A3B28;
+  --chip-uns-bg: #F2ECDC; --chip-uns-fg: #77602A;
+  --chip-int-bg: #E7E7F2; --chip-int-fg: #4A4E7C;
+  --chip-set-bg: #ECECEA; --chip-set-fg: #5A6170;
+  --focus: #2E6E9E;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #16181D;
+    --panel: #1D2129;
+    --panel-edge: #2A2F38;
+    --ink: #E8E9EC;
+    --ink2: #A7ADB8;
+    --ink3: #7C828E;
+    --grid: #242932;
+    --axis: #3A404A;
+    --data1: #4A8BC4;
+    --data2: #C96A4E;
+    --ribbon: rgba(74, 139, 196, 0.18);
+    --region: rgba(167, 173, 184, 0.06);
+    --region-edge: rgba(167, 173, 184, 0.2);
+    --chip-lic-bg: #21362B; --chip-lic-fg: #9CCBB0;
+    --chip-exc-bg: #3B2620; --chip-exc-fg: #E0A794;
+    --chip-uns-bg: #383019; --chip-uns-fg: #D6C085;
+    --chip-int-bg: #272A3F; --chip-int-fg: #AFB4E0;
+    --chip-set-bg: #262A31; --chip-set-fg: #A7ADB8;
+    --focus: #4A8BC4;
+  }
+}
+:root[data-theme="dark"] {
+  --surface: #16181D;
+  --panel: #1D2129;
+  --panel-edge: #2A2F38;
+  --ink: #E8E9EC;
+  --ink2: #A7ADB8;
+  --ink3: #7C828E;
+  --grid: #242932;
+  --axis: #3A404A;
+  --data1: #4A8BC4;
+  --data2: #C96A4E;
+  --ribbon: rgba(74, 139, 196, 0.18);
+  --region: rgba(167, 173, 184, 0.06);
+  --region-edge: rgba(167, 173, 184, 0.2);
+  --chip-lic-bg: #21362B; --chip-lic-fg: #9CCBB0;
+  --chip-exc-bg: #3B2620; --chip-exc-fg: #E0A794;
+  --chip-uns-bg: #383019; --chip-uns-fg: #D6C085;
+  --chip-int-bg: #272A3F; --chip-int-fg: #AFB4E0;
+  --chip-set-bg: #262A31; --chip-set-fg: #A7ADB8;
+  --focus: #4A8BC4;
+}
+:root[data-theme="light"] {
+  --surface: #FBFBF9;
+  --panel: #FFFFFF;
+  --panel-edge: #E7E7E1;
+  --ink: #1F2430;
+  --ink2: #5A6170;
+  --ink3: #8B909C;
+  --grid: #ECECE6;
+  --axis: #C9C9C2;
+  --data1: #2E6E9E;
+  --data2: #B4533A;
+  --ribbon: rgba(46, 110, 158, 0.13);
+  --region: rgba(90, 97, 112, 0.06);
+  --region-edge: rgba(90, 97, 112, 0.18);
+  --chip-lic-bg: #E3EFE8; --chip-lic-fg: #2A5C44;
+  --chip-exc-bg: #F4E3DE; --chip-exc-fg: #8A3B28;
+  --chip-uns-bg: #F2ECDC; --chip-uns-fg: #77602A;
+  --chip-int-bg: #E7E7F2; --chip-int-fg: #4A4E7C;
+  --chip-set-bg: #ECECEA; --chip-set-fg: #5A6170;
+  --focus: #2E6E9E;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+.var, em.mention {
+  font-family: "STIX Two Text", "Charter", "Iowan Old Style", Georgia, serif;
+  font-style: italic;
+}
+button:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 20px 22px 40px; }
+
+header.top {
+  display: flex; flex-wrap: wrap; align-items: flex-end;
+  justify-content: space-between; gap: 12px;
+  padding-bottom: 14px; margin-bottom: 18px;
+  border-bottom: 1px solid var(--panel-edge);
+}
+header.top h1 { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: -0.01em; }
+header.top .sub { margin: 3px 0 0; color: var(--ink2); font-size: 13.5px; }
+
+.tabs { display: flex; gap: 6px; }
+.tab {
+  border: 1px solid var(--panel-edge); background: var(--panel); color: var(--ink2);
+  padding: 6px 12px; border-radius: 7px; font-size: 13px; cursor: default;
+}
+.tab.active { color: var(--ink); border-color: var(--data1); font-weight: 600; }
+.tab:disabled { opacity: 0.55; }
+
+main { display: grid; grid-template-columns: 296px minmax(0, 1fr); gap: 18px; }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+
+.rail section {
+  background: var(--panel); border: 1px solid var(--panel-edge);
+  border-radius: 10px; padding: 13px 14px; margin-bottom: 12px;
+}
+.rail h2, .stage h2 {
+  margin: 0 0 9px; font-size: 11.5px; font-weight: 650;
+  text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink3);
+}
+
+.preset {
+  display: block; width: 100%; text-align: left; margin-bottom: 6px;
+  border: 1px solid var(--panel-edge); background: transparent; color: var(--ink);
+  border-radius: 8px; padding: 7px 10px; cursor: pointer; font-size: 13.5px;
+}
+.preset:hover { border-color: var(--data1); }
+.preset.active { border-color: var(--data1); box-shadow: inset 2px 0 0 var(--data1); }
+.preset .ex { display: block; color: var(--ink2); font-size: 12.5px; }
+.preset .ex .mark { font-style: normal; color: var(--data2); }
+
+.blurb { margin: 8px 0 0; color: var(--ink2); font-size: 12.5px; }
+
+.slider-row { margin-bottom: 10px; }
+.slider-row label {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 13px; color: var(--ink2); margin-bottom: 2px;
+}
+.slider-row output {
+  font-variant-numeric: tabular-nums; color: var(--ink); font-size: 13px;
+}
+.slider-row input[type="range"] { width: 100%; accent-color: var(--data1); margin: 0; }
+
+.btn {
+  border: 1px solid var(--panel-edge); background: var(--panel); color: var(--ink);
+  border-radius: 8px; padding: 7px 12px; font-size: 13.5px; cursor: pointer;
+}
+.btn:hover { border-color: var(--data1); }
+.btn.primary { border-color: var(--data1); color: var(--data1); font-weight: 600; }
+.btn.framing { border-color: var(--data2); color: var(--data2); font-weight: 600; width: 100%; }
+.btn.framing:hover { background: var(--chip-exc-bg); }
+.hint { display: block; margin-top: 6px; color: var(--ink3); font-size: 12px; }
+
+.playrow { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+.trow { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink2); }
+.trow input[type="range"] { flex: 1; accent-color: var(--data1); }
+.trow output { font-variant-numeric: tabular-nums; color: var(--ink); min-width: 30px; text-align: right; }
+
+.readout {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; margin-bottom: 12px;
+}
+.stat {
+  background: var(--panel); border: 1px solid var(--panel-edge); border-radius: 10px;
+  padding: 9px 13px; min-width: 96px; flex: 1;
+}
+.stat .k { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink3); }
+.stat .v { font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; margin-top: 2px; }
+.stat .v small { font-size: 12px; font-weight: 400; color: var(--ink2); }
+
+.chip {
+  display: inline-block; border-radius: 999px; padding: 3px 11px;
+  font-size: 13px; font-weight: 600; margin-top: 2px;
+}
+.chip.lic { background: var(--chip-lic-bg); color: var(--chip-lic-fg); }
+.chip.exc { background: var(--chip-exc-bg); color: var(--chip-exc-fg); }
+.chip.uns { background: var(--chip-uns-bg); color: var(--chip-uns-fg); }
+.chip.int { background: var(--chip-int-bg); color: var(--chip-int-fg); }
+.chip.set { background: var(--chip-set-bg); color: var(--chip-set-fg); }
+
+.panelbox {
+  background: var(--panel); border: 1px solid var(--panel-edge);
+  border-radius: 10px; padding: 13px 14px 8px; margin-bottom: 12px;
+}
+.chartbox { position: relative; }
+.chartbox svg { display: block; width: 100%; height: auto; }
+
+.tip {
+  position: absolute; pointer-events: none; display: none;
+  background: var(--panel); border: 1px solid var(--panel-edge); border-radius: 7px;
+  padding: 6px 9px; font-size: 12px; line-height: 1.5; color: var(--ink);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); white-space: nowrap; z-index: 5;
+  font-variant-numeric: tabular-nums;
+}
+
+/* SVG chart classes (colors flow from tokens) */
+.gridline { stroke: var(--grid); stroke-width: 1; }
+.axisline { stroke: var(--axis); stroke-width: 1; }
+.axistext { fill: var(--ink3); font-size: 11px; }
+.axislabel { fill: var(--ink2); font-size: 12px; }
+.ribbon { fill: var(--ribbon); }
+.meanline { stroke: var(--data1); stroke-width: 2; fill: none; }
+.nowdot { fill: var(--data1); stroke: var(--panel); stroke-width: 2; }
+.framingline { stroke: var(--data2); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.framingtext { fill: var(--data2); font-size: 11px; font-weight: 600; }
+.crosshair { stroke: var(--axis); stroke-width: 1; stroke-dasharray: 2 3; }
+.regionbox { fill: var(--region); stroke: var(--region-edge); stroke-dasharray: 3 3; rx: 8; }
+.regiontext { fill: var(--ink3); font-size: 11.5px; font-weight: 600; letter-spacing: 0.03em; }
+.trace { stroke: var(--data1); stroke-width: 1.75; fill: none; opacity: 0.55; }
+.ghost { fill: none; stroke: var(--ink3); stroke-width: 1.25; }
+.ghosttext { fill: var(--ink3); font-size: 11px; }
+.directlabel { fill: var(--data1); font-size: 11.5px; font-weight: 600; }
+.ribbonlabel { fill: var(--ink2); font-size: 11px; }
+
+details.data { margin-bottom: 12px; }
+details.data summary { cursor: pointer; color: var(--ink2); font-size: 13px; padding: 4px 2px; }
+.tablebox { overflow-x: auto; }
+.tablebox table { border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; margin-top: 6px; }
+.tablebox th, .tablebox td { padding: 3px 12px 3px 0; text-align: right; border-bottom: 1px solid var(--grid); }
+.tablebox th { color: var(--ink3); font-weight: 600; }
+
+footer.notes {
+  margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--panel-edge);
+  color: var(--ink2); font-size: 12.5px; max-width: 72ch;
+}
+footer.notes p { margin: 0 0 7px; }
+footer.notes a { color: var(--data1); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+</style>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>OVMG Licensing Lab</h1>
+      <p class="sub">Companion to <em>Grammaticality de-idealized</em> — the licensing posterior of the Operator-Value Model, live.</p>
+    </div>
+    <nav class="tabs" aria-label="Lab tabs">
+      <button class="tab active" aria-current="page">1 · Single node</button>
+      <button class="tab" disabled title="Planned">2 · Population</button>
+      <button class="tab" disabled title="Planned">3 · Diagnostic tree</button>
+    </nav>
+  </header>
+
+  <main>
+    <aside class="rail">
+      <section aria-labelledby="h-presets">
+        <h2 id="h-presets">Worked examples</h2>
+        <div id="presets"></div>
+        <p class="blurb" id="presetBlurb"></p>
+      </section>
+
+      <section aria-labelledby="h-params">
+        <h2 id="h-params">Parameters</h2>
+        <div id="sliders"></div>
+      </section>
+
+      <section aria-labelledby="h-events">
+        <h2 id="h-events">Events</h2>
+        <button class="btn framing" id="framingBtn">Inject framing shift</button>
+        <span class="hint">Adds +2 positive pseudo-counts at the current step. Diffuse posteriors jump; concentrated ones don't — the satiation rank order.</span>
+      </section>
+
+      <section aria-labelledby="h-play">
+        <h2 id="h-play">Playback</h2>
+        <div class="playrow">
+          <button class="btn primary" id="playBtn">Play</button>
+          <button class="btn" id="resetBtn">Reset</button>
+        </div>
+        <div class="trow">
+          <span class="var">t</span>
+          <input type="range" id="scrub" min="0" max="120" step="1" value="0"
+                 aria-label="Time step">
+          <output id="tOut">0</output>
+        </div>
+      </section>
+    </aside>
+
+    <section class="stage">
+      <div class="readout" id="readout">
+        <div class="stat"><div class="k">Status</div><div class="v"><span class="chip set" id="chip">—</span></div></div>
+        <div class="stat"><div class="k">Mean <span class="var">C</span></div><div class="v" id="roMean">—</div></div>
+        <div class="stat"><div class="k">Concentration <span class="var">ν</span></div><div class="v" id="roNu">—</div></div>
+        <div class="stat"><div class="k">95% CrI</div><div class="v" id="roCri">—</div></div>
+        <div class="stat"><div class="k">Streams / step</div><div class="v" id="roStreams">—</div></div>
+      </div>
+
+      <div class="panelbox">
+        <h2>Licensing posterior trajectory — mean with 95% credible ribbon</h2>
+        <div class="chartbox">
+          <svg id="trajSvg" viewBox="0 0 860 300" role="img"
+               aria-label="Posterior mean trajectory with 95 percent credible ribbon over time"></svg>
+          <div class="tip" id="trajTip"></div>
+        </div>
+      </div>
+
+      <div class="panelbox">
+        <h2>Status state space — mean × concentration (paper fig. 2)</h2>
+        <div class="chartbox">
+          <svg id="ssSvg" viewBox="0 0 860 330" role="img"
+               aria-label="State space: posterior mean against posterior concentration"></svg>
+          <div class="tip" id="ssTip"></div>
+        </div>
+      </div>
+
+      <details class="data">
+        <summary>Data table (current run)</summary>
+        <div class="tablebox"><table id="dataTable"></table></div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="notes">
+    <p>Numerical core: the shared OVMG Beta engine (paper eqs. 44–47), fixture-tested
+    against the paper's Figure 4; the preempted-gap and starved presets reproduce that
+    figure exactly. Preset slider values are illustrative modelling choices; the
+    qualitative profiles follow the paper's worked examples.</p>
+    <p>Per-step streams: <span class="var">s</span> = <span class="var">N</span>·π (positive tokens),
+    <span class="var">p</span> = <span class="var">N</span>·(1−π)·(1−ω)·<span class="var">ρ⋆</span>
+    (preemption mass; ω is the outside-option share, whose omissions have
+    attributability ≈ 0). Heterogeneity is population-level and lives in Tab 2.</p>
+    <p>Code: <a href="https://github.com/BrettRey/ovmg-tools">github.com/BrettRey/ovmg-tools</a> (MIT).</p>
+  </footer>
+</div>
+
+<script type="module">
+// engine.js -- OVMG Beta update engine, JavaScript reference implementation.
+//
+// Implements the discounted conjugate filter of Reynolds, "Grammaticality
+// de-idealized" (the OVMG paper), section "Dynamics: evidence streams,
+// weighted omissions, and repair" (label sec:update; eqs. 44-47 in the
+// 2026-07-09 draft):
+//
+//   a <- delta_m * a + lambda_pos * s_t          (eq. 44)
+//   b <- delta_m * b + lambda_neg * (e_t + p_t)  (eq. 45)
+//   C = a / (a + b),  nu = a + b                 (eq. 46, label eq:beta-update)
+//
+// Per-occasion omission mass (eq. 47, label eq:attributability, high-confidence
+// regimes): q_i = rho_star when an in-repertoire competitor was chosen,
+// q_i ~ 0 when the outside option (periphrasis/avoidance) was taken. The
+// occasion's contribution to p_t is r_i * q_i * delta_m^(t - t_i), with r_i
+// the niche-identification posterior.
+//
+// Design law: this engine is implemented once per language (JS here, R in
+// r/), kept numerically identical via the shared fixtures in tests/fixtures/.
+// Any deviation from the paper's math is a bug unless logged in DECISIONS.md.
+
+/** Beta posterior state over the population licensing rate theta_t(kappa, c). */
+export function makeState(a = 1, b = 1) {
+  if (!(a > 0) || !(b > 0)) {
+    throw new RangeError(`Beta parameters must be positive, got a=${a}, b=${b}`);
+  }
+  return { a, b };
+}
+
+/**
+ * One update step (eqs. 44-45).
+ * evidence: { s, e, p } -- positive tokens, error evidence, preemption mass.
+ * params:   { deltaM in (0,1], lambdaPos >= 0, lambdaNeg >= 0 }.
+ * Returns a new state; does not mutate.
+ */
+export function update(state, evidence = {}, params = {}) {
+  const { s = 0, e = 0, p = 0 } = evidence;
+  const { deltaM = 1, lambdaPos = 1, lambdaNeg = 1 } = params;
+  if (!(deltaM > 0) || deltaM > 1) {
+    throw new RangeError(`deltaM must be in (0, 1], got ${deltaM}`);
+  }
+  if (s < 0 || e < 0 || p < 0 || lambdaPos < 0 || lambdaNeg < 0) {
+    throw new RangeError('evidence streams and weights must be non-negative');
+  }
+  return {
+    a: deltaM * state.a + lambdaPos * s,
+    b: deltaM * state.b + lambdaNeg * (e + p),
+  };
+}
+
+/**
+ * Preemption mass contributed by one omission occasion at lag dt (eq. 47,
+ * high-confidence regimes): p_i = r * q * deltaM^dt, with q = rhoStar for an
+ * in-repertoire competitor choice and q = 0 for the outside option.
+ */
+export function omissionMass({ r = 1, rhoStar, outsideOption = false, deltaM = 1, dt = 0 }) {
+  if (!(rhoStar >= 0) || rhoStar > 1) {
+    throw new RangeError(`rhoStar must be in [0, 1], got ${rhoStar}`);
+  }
+  const q = outsideOption ? 0 : rhoStar;
+  return r * q * Math.pow(deltaM, dt);
+}
+
+/** Posterior mean C_t (eq. 46). */
+export const mean = ({ a, b }) => a / (a + b);
+
+/** Concentration nu_t = a + b (eq. 46). */
+export const concentration = ({ a, b }) => a + b;
+
+/** Equal-tailed credible interval [lo, hi] at the given level (default 95%). */
+export function credibleInterval(state, level = 0.95) {
+  const tail = (1 - level) / 2;
+  return [betaQuantile(tail, state.a, state.b), betaQuantile(1 - tail, state.a, state.b)];
+}
+
+/** Convenience summary of a state. */
+export function summary(state, level = 0.95) {
+  return {
+    mean: mean(state),
+    nu: concentration(state),
+    cri: credibleInterval(state, level),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Numerics: log-gamma (Lanczos), regularized incomplete beta (continued
+// fraction), Beta quantile (bisection). Standard algorithms; accurate to well
+// below the fixture tolerance of 5e-5.
+// ---------------------------------------------------------------------------
+
+const LANCZOS_G = 7;
+const LANCZOS_C = [
+  0.99999999999980993, 676.5203681218851, -1259.1392167224028,
+  771.32342877765313, -176.61502916214059, 12.507343278686905,
+  -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7,
+];
+
+function logGamma(x) {
+  if (x < 0.5) {
+    // Reflection formula.
+    return Math.log(Math.PI / Math.sin(Math.PI * x)) - logGamma(1 - x);
+  }
+  const z = x - 1;
+  let sum = LANCZOS_C[0];
+  for (let i = 1; i < LANCZOS_C.length; i++) sum += LANCZOS_C[i] / (z + i);
+  const t = z + LANCZOS_G + 0.5;
+  return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(sum);
+}
+
+function betaContinuedFraction(x, a, b) {
+  const MAXIT = 300;
+  const EPS = 3e-15;
+  const FPMIN = 1e-300;
+  const qab = a + b;
+  const qap = a + 1;
+  const qam = a - 1;
+  let c = 1;
+  let d = 1 - (qab * x) / qap;
+  if (Math.abs(d) < FPMIN) d = FPMIN;
+  d = 1 / d;
+  let h = d;
+  for (let m = 1; m <= MAXIT; m++) {
+    const m2 = 2 * m;
+    let aa = (m * (b - m) * x) / ((qam + m2) * (a + m2));
+    d = 1 + aa * d;
+    if (Math.abs(d) < FPMIN) d = FPMIN;
+    c = 1 + aa / c;
+    if (Math.abs(c) < FPMIN) c = FPMIN;
+    d = 1 / d;
+    h *= d * c;
+    aa = (-(a + m) * (qab + m) * x) / ((a + m2) * (qap + m2));
+    d = 1 + aa * d;
+    if (Math.abs(d) < FPMIN) d = FPMIN;
+    c = 1 + aa / c;
+    if (Math.abs(c) < FPMIN) c = FPMIN;
+    d = 1 / d;
+    const del = d * c;
+    h *= del;
+    if (Math.abs(del - 1) < EPS) return h;
+  }
+  throw new Error('betaContinuedFraction failed to converge');
+}
+
+/** Regularized incomplete beta function I_x(a, b), the Beta(a, b) CDF at x. */
+export function regularizedIncompleteBeta(x, a, b) {
+  if (x <= 0) return 0;
+  if (x >= 1) return 1;
+  const lnFront =
+    logGamma(a + b) - logGamma(a) - logGamma(b) +
+    a * Math.log(x) + b * Math.log(1 - x);
+  const front = Math.exp(lnFront);
+  if (x < (a + 1) / (a + b + 2)) {
+    return (front * betaContinuedFraction(x, a, b)) / a;
+  }
+  return 1 - (front * betaContinuedFraction(1 - x, b, a)) / b;
+}
+
+/** Beta(a, b) quantile: the x with I_x(a, b) = p. Bisection; ~1e-14 accuracy. */
+export function betaQuantile(p, a, b) {
+  if (p < 0 || p > 1) throw new RangeError(`p must be in [0, 1], got ${p}`);
+  if (p === 0) return 0;
+  if (p === 1) return 1;
+  let lo = 0;
+  let hi = 1;
+  for (let i = 0; i < 100; i++) {
+    const mid = (lo + hi) / 2;
+    if (regularizedIncompleteBeta(mid, a, b) < p) lo = mid;
+    else hi = mid;
+    if (hi - lo < 1e-15) break;
+  }
+  return (lo + hi) / 2;
+}
+
+// sim.js -- Tab-1 simulation layer for the licensing lab.
+//
+// Maps interface parameters to the engine's per-step evidence streams and runs
+// the discounted Beta filter (engine.js; paper eqs. 44-47) over T steps. The
+// parameter-to-stream mapping below is a lab modelling convention (logged in
+// DECISIONS.md), not paper math; all posterior arithmetic is the engine's.
+//
+// Interface parameters:
+//   N        expected niche opportunities per step
+//   pi       positive-token rate: share of opportunities realized as target tokens
+//   rhoStar  counterfactual choice probability rho* for competitor omissions
+//   omega    outside-option share of omission occasions (periphrasis/avoidance;
+//            attributability q ~ 0, so those occasions contribute no mass)
+//   deltaM   memory discount delta_m
+//   decayTau optional: opportunities decay as N * exp(-(t-1)/decayTau)
+//            (the moribund-contrast preset)
+//   framings optional [{t, boost}]: prior shift injected at step t
+//            (a facilitating frame as transient positive pseudo-counts)
+//
+// Expected per-step streams (deterministic, expectation-level; sampling noise
+// is Tab 2's job):
+//   s_t = N_t * pi
+//   p_t = N_t * (1 - pi) * (1 - omega) * rhoStar     (r_i = 1, dt = 0)
+//   e_t = 0
+
+
+
+export const FRAMING_BOOST = 2;
+
+function snap(t, state, opp) {
+  const [lo, hi] = credibleInterval(state);
+  return { t, a: state.a, b: state.b, mean: mean(state), nu: concentration(state), lo, hi, opp };
+}
+
+function boostSum(framings, t) {
+  let sum = 0;
+  for (const f of framings) if (f.t === t) sum += f.boost;
+  return sum;
+}
+
+export function simulate(params, T = 120) {
+  const {
+    N = 1, pi = 0, rhoStar = 1, omega = 0, deltaM = 1,
+    priorA = 1, priorB = 1, decayTau = null, framings = [],
+  } = params;
+  let state = makeState(priorA, priorB);
+  const b0 = boostSum(framings, 0);
+  if (b0 > 0) state = { a: state.a + b0, b: state.b };
+  let opp = 0;
+  const out = [snap(0, state, opp)];
+  for (let t = 1; t <= T; t++) {
+    const Nt = decayTau ? N * Math.exp(-(t - 1) / decayTau) : N;
+    opp += Nt;
+    const s = Nt * pi;
+    const p = Nt * (1 - pi) * (1 - omega) * rhoStar;
+    state = update(state, { s, e: 0, p }, { deltaM });
+    const boost = boostSum(framings, t);
+    if (boost > 0) state = { a: state.a + boost, b: state.b };
+    out.push(snap(t, state, opp));
+  }
+  return out;
+}
+
+// Worked-example presets (paper, worked-examples section). Slider values are
+// illustrative modelling choices; the qualitative profiles are the paper's.
+// The preempted and starved presets reproduce Figure 4 exactly (dense: p = 5
+// per step; rare: p = 0.01 per step) -- enforced by tests/run-sim-smoke.mjs.
+export const PRESETS = {
+  licensed: {
+    label: 'Licensed',
+    example: 'Which car did you buy?',
+    marker: '',
+    params: { N: 3, pi: 0.95, rhoStar: 0.9, omega: 0.3, deltaM: 1 },
+    blurb: 'Dense niche, target nearly always chosen: the posterior climbs and concentrates high.',
+  },
+  preempted: {
+    label: 'Preempted gap',
+    example: 'Which did you buy car?',
+    marker: '*',
+    params: { N: 5, pi: 0, rhoStar: 1, omega: 0, deltaM: 1 },
+    blurb: 'Dense niche, a competitor always chosen with rho* = 1: the posterior falls and concentrates (Figure 4, dense).',
+  },
+  starved: {
+    label: 'Starved',
+    example: 'friend of whose',
+    marker: '?',
+    params: { N: 0.01, pi: 0, rhoStar: 1, omega: 0, deltaM: 1 },
+    blurb: 'The niche almost never arises: the posterior stays near its prior and the interval spans nearly the whole unit interval (Figure 4, rare).',
+  },
+  winnerless: {
+    label: 'Winnerless cell',
+    example: "pobedit' 1SG",
+    marker: '',
+    params: { N: 5, pi: 0, rhoStar: 0.9, omega: 0.99, deltaM: 1 },
+    blurb: 'Dense niche but the outside option absorbs production: little confident evidence either way, so low mean and low concentration.',
+  },
+  moribund: {
+    label: 'Moribund contrast',
+    example: 'whom (spoken)',
+    marker: '',
+    params: { N: 2, pi: 0.85, rhoStar: 0.5, omega: 0.5, deltaM: 0.97, decayTau: 25 },
+    blurb: 'Opportunities decay while memory discounts: concentration falls and the interval widens before the mean moves.',
+  },
+};
+
+// app.js -- Licensing lab Tab 1 UI. Concatenated after engine.js and sim.js
+// by lab/build.mjs; uses their functions directly (no imports here).
+
+const T_MAX = 120;
+const NU_MIN = 1;
+const NU_MAX = 400;
+
+const SLIDER_SPEC = [
+  { key: 'N', label: 'Opportunity rate', sym: 'N', min: 0, max: 6, step: 0.05, fmt: (v) => v.toFixed(2) },
+  { key: 'pi', label: 'Positive-token rate', sym: 'π', min: 0, max: 1, step: 0.01, fmt: (v) => v.toFixed(2) },
+  { key: 'rhoStar', label: 'Counterfactual choice', sym: 'ρ<sup>⋆</sup>', min: 0, max: 1, step: 0.01, fmt: (v) => v.toFixed(2) },
+  { key: 'omega', label: 'Outside-option share', sym: 'ω', min: 0, max: 1, step: 0.01, fmt: (v) => v.toFixed(2) },
+  { key: 'deltaM', label: 'Memory discount', sym: 'δ<sub>m</sub>', min: 0.9, max: 1, step: 0.001, fmt: (v) => v.toFixed(3) },
+];
+
+const ui = {
+  preset: 'licensed',
+  params: { ...PRESETS.licensed.params },
+  framings: [],
+  t: 0,
+  playing: false,
+  timer: null,
+  traj: null,
+};
+
+const $ = (id) => document.getElementById(id);
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Ghost markers: where each preset ends up at t=120 (computed from the engine,
+// so the fig. 2 landmarks are honest).
+const GHOSTS = Object.entries(PRESETS).map(([key, p]) => {
+  const end = simulate(p.params, T_MAX).at(-1);
+  return { key, label: p.label, mean: end.mean, nu: end.nu };
+});
+
+function recompute() {
+  ui.traj = simulate({ ...ui.params, framings: ui.framings }, T_MAX);
+}
+
+// ---- classification (lab display convention; see DECISIONS.md) ----
+function classify(row) {
+  if (row.nu < 8) {
+    return row.opp < 10
+      ? { cls: 'uns', text: 'unsettled — starved' }
+      : { cls: 'uns', text: 'unsettled — avoidance-divided' };
+  }
+  if (row.nu >= 40) {
+    if (row.mean >= 0.75) return { cls: 'lic', text: 'licensed' };
+    if (row.mean <= 0.25) return { cls: 'exc', text: 'excluded' };
+    return { cls: 'int', text: 'interior (heterogeneity: Tab 2)' };
+  }
+  return { cls: 'set', text: 'settling…' };
+}
+
+// ---- controls ----
+function buildPresets() {
+  const box = $('presets');
+  box.innerHTML = '';
+  for (const [key, p] of Object.entries(PRESETS)) {
+    const btn = document.createElement('button');
+    btn.className = 'preset' + (key === ui.preset ? ' active' : '');
+    btn.dataset.key = key;
+    btn.innerHTML = `${p.label} <span class="ex"><span class="mark">${p.marker}</span><em class="mention">${p.example}</em></span>`;
+    btn.addEventListener('click', () => setPreset(key));
+    box.appendChild(btn);
+  }
+  $('presetBlurb').textContent = PRESETS[ui.preset].blurb;
+}
+
+function buildSliders() {
+  const box = $('sliders');
+  box.innerHTML = '';
+  for (const spec of SLIDER_SPEC) {
+    const row = document.createElement('div');
+    row.className = 'slider-row';
+    row.innerHTML = `<label for="sl-${spec.key}">
+        <span>${spec.label} <span class="var">${spec.sym}</span></span>
+        <output id="out-${spec.key}"></output>
+      </label>
+      <input type="range" id="sl-${spec.key}" min="${spec.min}" max="${spec.max}" step="${spec.step}">`;
+    box.appendChild(row);
+    const input = row.querySelector('input');
+    input.value = ui.params[spec.key];
+    row.querySelector('output').textContent = spec.fmt(ui.params[spec.key]);
+    input.addEventListener('input', () => {
+      ui.params[spec.key] = parseFloat(input.value);
+      delete ui.params.decayTau; // manual slider moves leave preset decay mode
+      ui.preset = null;
+      document.querySelectorAll('.preset').forEach((b) => b.classList.remove('active'));
+      $('presetBlurb').textContent = 'Custom parameters.';
+      row.querySelector('output').textContent = spec.fmt(ui.params[spec.key]);
+      recompute();
+      render();
+    });
+  }
+}
+
+function syncSliders() {
+  for (const spec of SLIDER_SPEC) {
+    $(`sl-${spec.key}`).value = ui.params[spec.key];
+    $(`out-${spec.key}`).textContent = spec.fmt(ui.params[spec.key]);
+  }
+}
+
+function setPreset(key) {
+  ui.preset = key;
+  ui.params = { ...PRESETS[key].params };
+  ui.framings = [];
+  ui.t = 0;
+  document.querySelectorAll('.preset').forEach((b) =>
+    b.classList.toggle('active', b.dataset.key === key));
+  $('presetBlurb').textContent = PRESETS[key].blurb;
+  syncSliders();
+  recompute();
+  if (reducedMotion) { ui.t = T_MAX; render(); } else { play(); }
+}
+
+function play() {
+  if (ui.playing) return;
+  if (ui.t >= T_MAX) ui.t = 0;
+  ui.playing = true;
+  $('playBtn').textContent = 'Pause';
+  ui.timer = setInterval(() => {
+    ui.t += 1;
+    if (ui.t >= T_MAX) { ui.t = T_MAX; pause(); }
+    render();
+  }, 45);
+}
+
+function pause() {
+  ui.playing = false;
+  $('playBtn').textContent = 'Play';
+  if (ui.timer) { clearInterval(ui.timer); ui.timer = null; }
+}
+
+// ---- rendering ----
+const TRAJ = { w: 860, h: 300, l: 46, r: 14, top: 14, bot: 34 };
+const SS = { w: 860, h: 330, l: 56, r: 14, top: 16, bot: 36 };
+
+const txT = (t) => TRAJ.l + (t / T_MAX) * (TRAJ.w - TRAJ.l - TRAJ.r);
+const tyV = (v) => TRAJ.top + (1 - v) * (TRAJ.h - TRAJ.top - TRAJ.bot);
+const sxC = (c) => SS.l + c * (SS.w - SS.l - SS.r);
+const syNu = (nu) => {
+  const z = (Math.log10(Math.min(Math.max(nu, NU_MIN), NU_MAX)) - Math.log10(NU_MIN)) /
+    (Math.log10(NU_MAX) - Math.log10(NU_MIN));
+  return SS.top + (1 - z) * (SS.h - SS.top - SS.bot);
+};
+
+function renderTraj() {
+  const rows = ui.traj;
+  let s = '';
+  // grid + axes
+  for (const v of [0, 0.25, 0.5, 0.75, 1]) {
+    s += `<line class="gridline" x1="${TRAJ.l}" x2="${TRAJ.w - TRAJ.r}" y1="${tyV(v)}" y2="${tyV(v)}"/>`;
+    s += `<text class="axistext" x="${TRAJ.l - 7}" y="${tyV(v) + 3.5}" text-anchor="end">${v}</text>`;
+  }
+  for (let t = 0; t <= T_MAX; t += 20) {
+    s += `<text class="axistext" x="${txT(t)}" y="${TRAJ.h - TRAJ.bot + 16}" text-anchor="middle">${t}</text>`;
+  }
+  s += `<line class="axisline" x1="${TRAJ.l}" x2="${TRAJ.w - TRAJ.r}" y1="${tyV(0)}" y2="${tyV(0)}"/>`;
+  s += `<text class="axislabel" x="${(TRAJ.l + TRAJ.w - TRAJ.r) / 2}" y="${TRAJ.h - 4}" text-anchor="middle">experience (steps)</text>`;
+  // ribbon
+  const hi = rows.map((r) => `${txT(r.t)},${tyV(r.hi)}`).join(' ');
+  const lo = rows.slice().reverse().map((r) => `${txT(r.t)},${tyV(r.lo)}`).join(' ');
+  s += `<polygon class="ribbon" points="${hi} ${lo}"/>`;
+  // framing markers
+  for (const f of ui.framings) {
+    s += `<line class="framingline" x1="${txT(f.t)}" x2="${txT(f.t)}" y1="${TRAJ.top}" y2="${tyV(0)}"/>`;
+    s += `<text class="framingtext" x="${txT(f.t) + 4}" y="${TRAJ.top + 11}">framing +${f.boost}</text>`;
+  }
+  // mean line + direct labels
+  const mean = rows.map((r) => `${txT(r.t)},${tyV(r.mean)}`).join(' ');
+  s += `<polyline class="meanline" points="${mean}"/>`;
+  const last = rows[rows.length - 1];
+  s += `<text class="directlabel" x="${txT(T_MAX) - 4}" y="${tyV(last.mean) - 7}" text-anchor="end">mean</text>`;
+  // ribbon label sits inside the early ribbon, which starts wide in every scenario
+  const early = rows[Math.round(T_MAX * 0.06)];
+  s += `<text class="ribbonlabel" x="${txT(early.t) + 4}" y="${tyV((early.hi + early.lo) / 2) + 4}">95% CrI</text>`;
+  // current-t dot
+  const now = rows[ui.t];
+  s += `<circle class="nowdot" cx="${txT(now.t)}" cy="${tyV(now.mean)}" r="5"/>`;
+  $('trajSvg').innerHTML = s;
+}
+
+function renderSS() {
+  let s = '';
+  // regions (display convention thresholds: nu >= 40 concentrated, nu < 8 diffuse)
+  const y40 = syNu(40);
+  const y8 = syNu(8);
+  const yTop = SS.top;
+  const yBot = SS.h - SS.bot;
+  s += `<rect class="regionbox" x="${sxC(0)}" y="${yTop}" width="${sxC(0.25) - sxC(0)}" height="${y40 - yTop}"/>`;
+  s += `<text class="regiontext" x="${sxC(0.02)}" y="${y40 - 10}">excluded · preempted gap</text>`;
+  s += `<rect class="regionbox" x="${sxC(0.75)}" y="${yTop}" width="${sxC(1) - sxC(0.75)}" height="${y40 - yTop}"/>`;
+  s += `<text class="regiontext" x="${sxC(0.98)}" y="${y40 - 10}" text-anchor="end">licensed</text>`;
+  s += `<rect class="regionbox" x="${sxC(0)}" y="${y8}" width="${sxC(1) - sxC(0)}" height="${yBot - y8}"/>`;
+  s += `<text class="regiontext" x="${sxC(0.02)}" y="${yBot - 8}">unsettled — starved / avoidance-divided (low ν)</text>`;
+  // grid + axes
+  for (const nu of [1, 10, 100]) {
+    s += `<line class="gridline" x1="${SS.l}" x2="${SS.w - SS.r}" y1="${syNu(nu)}" y2="${syNu(nu)}"/>`;
+    s += `<text class="axistext" x="${SS.l - 7}" y="${syNu(nu) + 3.5}" text-anchor="end">${nu}</text>`;
+  }
+  for (const c of [0, 0.25, 0.5, 0.75, 1]) {
+    s += `<text class="axistext" x="${sxC(c)}" y="${yBot + 16}" text-anchor="middle">${c}</text>`;
+  }
+  s += `<line class="axisline" x1="${SS.l}" x2="${SS.w - SS.r}" y1="${yBot}" y2="${yBot}"/>`;
+  s += `<text class="axislabel" x="${(SS.l + SS.w - SS.r) / 2}" y="${SS.h - 4}" text-anchor="middle">posterior mean C</text>`;
+  s += `<text class="axislabel" transform="rotate(-90 14 ${(yTop + yBot) / 2})" x="14" y="${(yTop + yBot) / 2}" text-anchor="middle">concentration ν (log)</text>`;
+  // ghost markers: preset end states
+  for (const g of GHOSTS) {
+    if (g.key === ui.preset) continue;
+    s += `<circle class="ghost" cx="${sxC(g.mean)}" cy="${syNu(g.nu)}" r="4.5"/>`;
+    const anchor = g.mean > 0.6 ? 'end' : 'start';
+    const dx = g.mean > 0.6 ? -8 : 8;
+    s += `<text class="ghosttext" x="${sxC(g.mean) + dx}" y="${syNu(g.nu) + 4}" text-anchor="${anchor}">${g.label}</text>`;
+  }
+  // trace up to current t
+  const pts = ui.traj.slice(0, ui.t + 1).map((r) => `${sxC(r.mean)},${syNu(r.nu)}`).join(' ');
+  s += `<polyline class="trace" points="${pts}"/>`;
+  const now = ui.traj[ui.t];
+  s += `<circle class="nowdot" cx="${sxC(now.mean)}" cy="${syNu(now.nu)}" r="6"/>`;
+  $('ssSvg').innerHTML = s;
+}
+
+function renderReadout() {
+  const now = ui.traj[ui.t];
+  const st = classify(now);
+  const chip = $('chip');
+  chip.className = `chip ${st.cls}`;
+  chip.textContent = st.text;
+  $('roMean').textContent = now.mean.toFixed(3);
+  $('roNu').textContent = now.nu.toFixed(1);
+  $('roCri').textContent = `${now.lo.toFixed(3)}–${now.hi.toFixed(3)}`;
+  const Nt = ui.params.decayTau && ui.t > 0
+    ? ui.params.N * Math.exp(-(ui.t - 1) / ui.params.decayTau) : ui.params.N;
+  const sV = Nt * ui.params.pi;
+  const pV = Nt * (1 - ui.params.pi) * (1 - ui.params.omega) * ui.params.rhoStar;
+  $('roStreams').innerHTML = `<small><span class="var">s</span> ${sV.toFixed(2)} · <span class="var">p</span> ${pV.toFixed(2)}</small>`;
+  $('scrub').value = ui.t;
+  $('tOut').textContent = ui.t;
+}
+
+function renderTable() {
+  const head = '<tr><th>t</th><th>mean</th><th>2.5%</th><th>97.5%</th><th>ν</th></tr>';
+  const rows = [];
+  for (let t = 0; t <= T_MAX; t += 10) {
+    const r = ui.traj[t];
+    rows.push(`<tr><td>${t}</td><td>${r.mean.toFixed(4)}</td><td>${r.lo.toFixed(4)}</td><td>${r.hi.toFixed(4)}</td><td>${r.nu.toFixed(1)}</td></tr>`);
+  }
+  $('dataTable').innerHTML = head + rows.join('');
+}
+
+function render() {
+  renderTraj();
+  renderSS();
+  renderReadout();
+  renderTable();
+}
+
+// ---- hover layer ----
+function attachTrajHover() {
+  const svg = $('trajSvg');
+  const tip = $('trajTip');
+  const toT = (evt) => {
+    const rect = svg.getBoundingClientRect();
+    const x = ((evt.clientX - rect.left) / rect.width) * TRAJ.w;
+    return Math.max(0, Math.min(T_MAX, Math.round(((x - TRAJ.l) / (TRAJ.w - TRAJ.l - TRAJ.r)) * T_MAX)));
+  };
+  svg.addEventListener('mousemove', (evt) => {
+    const t = toT(evt);
+    const r = ui.traj[t];
+    const rect = svg.getBoundingClientRect();
+    tip.style.display = 'block';
+    tip.innerHTML = `<span class="var">t</span> ${t}<br>mean ${r.mean.toFixed(3)}<br>CrI ${r.lo.toFixed(3)}–${r.hi.toFixed(3)}<br><span class="var">ν</span> ${r.nu.toFixed(1)}`;
+    const px = ((txT(t)) / TRAJ.w) * rect.width;
+    tip.style.left = `${Math.min(px + 12, rect.width - 130)}px`;
+    tip.style.top = '10px';
+    // crosshair drawn on top of existing content
+    const old = svg.querySelector('.crosshair');
+    if (old) old.remove();
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('class', 'crosshair');
+    line.setAttribute('x1', txT(t)); line.setAttribute('x2', txT(t));
+    line.setAttribute('y1', TRAJ.top); line.setAttribute('y2', tyV(0));
+    svg.appendChild(line);
+  });
+  svg.addEventListener('mouseleave', () => {
+    tip.style.display = 'none';
+    const old = svg.querySelector('.crosshair');
+    if (old) old.remove();
+  });
+}
+
+function attachSSHover() {
+  const svg = $('ssSvg');
+  const tip = $('ssTip');
+  svg.addEventListener('mousemove', (evt) => {
+    const now = ui.traj[ui.t];
+    const rect = svg.getBoundingClientRect();
+    tip.style.display = 'block';
+    tip.innerHTML = `current state<br>mean ${now.mean.toFixed(3)} · <span class="var">ν</span> ${now.nu.toFixed(1)}`;
+    tip.style.left = `${Math.min(evt.clientX - rect.left + 14, rect.width - 150)}px`;
+    tip.style.top = `${evt.clientY - rect.top + 14}px`;
+  });
+  svg.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+}
+
+// ---- wiring ----
+function init() {
+  buildPresets();
+  buildSliders();
+  recompute();
+  $('playBtn').addEventListener('click', () => (ui.playing ? pause() : play()));
+  $('resetBtn').addEventListener('click', () => {
+    ui.framings = [];
+    ui.t = 0;
+    pause();
+    recompute();
+    render();
+  });
+  $('scrub').addEventListener('input', (e) => {
+    pause();
+    ui.t = parseInt(e.target.value, 10);
+    render();
+  });
+  $('framingBtn').addEventListener('click', () => {
+    ui.framings.push({ t: ui.t, boost: FRAMING_BOOST });
+    recompute();
+    render();
+  });
+  attachTrajHover();
+  attachSSHover();
+  if (reducedMotion) { ui.t = T_MAX; render(); } else { render(); play(); }
+}
+
+init();
+
+</script>

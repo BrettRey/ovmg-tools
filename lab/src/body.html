@@ -1,0 +1,93 @@
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>OVMG Licensing Lab</h1>
+      <p class="sub">Companion to <em>Grammaticality de-idealized</em> — the licensing posterior of the Operator-Value Model, live.</p>
+    </div>
+    <nav class="tabs" aria-label="Lab tabs">
+      <button class="tab active" aria-current="page">1 · Single node</button>
+      <button class="tab" disabled title="Planned">2 · Population</button>
+      <button class="tab" disabled title="Planned">3 · Diagnostic tree</button>
+    </nav>
+  </header>
+
+  <main>
+    <aside class="rail">
+      <section aria-labelledby="h-presets">
+        <h2 id="h-presets">Worked examples</h2>
+        <div id="presets"></div>
+        <p class="blurb" id="presetBlurb"></p>
+      </section>
+
+      <section aria-labelledby="h-params">
+        <h2 id="h-params">Parameters</h2>
+        <div id="sliders"></div>
+      </section>
+
+      <section aria-labelledby="h-events">
+        <h2 id="h-events">Events</h2>
+        <button class="btn framing" id="framingBtn">Inject framing shift</button>
+        <span class="hint">Adds +2 positive pseudo-counts at the current step. Diffuse posteriors jump; concentrated ones don't — the satiation rank order.</span>
+      </section>
+
+      <section aria-labelledby="h-play">
+        <h2 id="h-play">Playback</h2>
+        <div class="playrow">
+          <button class="btn primary" id="playBtn">Play</button>
+          <button class="btn" id="resetBtn">Reset</button>
+        </div>
+        <div class="trow">
+          <span class="var">t</span>
+          <input type="range" id="scrub" min="0" max="120" step="1" value="0"
+                 aria-label="Time step">
+          <output id="tOut">0</output>
+        </div>
+      </section>
+    </aside>
+
+    <section class="stage">
+      <div class="readout" id="readout">
+        <div class="stat"><div class="k">Status</div><div class="v"><span class="chip set" id="chip">—</span></div></div>
+        <div class="stat"><div class="k">Mean <span class="var">C</span></div><div class="v" id="roMean">—</div></div>
+        <div class="stat"><div class="k">Concentration <span class="var">ν</span></div><div class="v" id="roNu">—</div></div>
+        <div class="stat"><div class="k">95% CrI</div><div class="v" id="roCri">—</div></div>
+        <div class="stat"><div class="k">Streams / step</div><div class="v" id="roStreams">—</div></div>
+      </div>
+
+      <div class="panelbox">
+        <h2>Licensing posterior trajectory — mean with 95% credible ribbon</h2>
+        <div class="chartbox">
+          <svg id="trajSvg" viewBox="0 0 860 300" role="img"
+               aria-label="Posterior mean trajectory with 95 percent credible ribbon over time"></svg>
+          <div class="tip" id="trajTip"></div>
+        </div>
+      </div>
+
+      <div class="panelbox">
+        <h2>Status state space — mean × concentration (paper fig. 2)</h2>
+        <div class="chartbox">
+          <svg id="ssSvg" viewBox="0 0 860 330" role="img"
+               aria-label="State space: posterior mean against posterior concentration"></svg>
+          <div class="tip" id="ssTip"></div>
+        </div>
+      </div>
+
+      <details class="data">
+        <summary>Data table (current run)</summary>
+        <div class="tablebox"><table id="dataTable"></table></div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="notes">
+    <p>Numerical core: the shared OVMG Beta engine (paper eqs. 44–47), fixture-tested
+    against the paper's Figure 4; the preempted-gap and starved presets reproduce that
+    figure exactly. Preset slider values are illustrative modelling choices; the
+    qualitative profiles follow the paper's worked examples.</p>
+    <p>Per-step streams: <span class="var">s</span> = <span class="var">N</span>·π (positive tokens),
+    <span class="var">p</span> = <span class="var">N</span>·(1−π)·(1−ω)·<span class="var">ρ⋆</span>
+    (preemption mass; ω is the outside-option share, whose omissions have
+    attributability ≈ 0). Heterogeneity is population-level and lives in Tab 2.</p>
+    <p>Code: <a href="https://github.com/BrettRey/ovmg-tools">github.com/BrettRey/ovmg-tools</a> (MIT).</p>
+  </footer>
+</div>

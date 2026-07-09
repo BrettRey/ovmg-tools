@@ -38,18 +38,27 @@ keeping the two numerically identical. Everything else is UI or I/O around it.
 
 ```
 js/engine.js        Beta update engine, JS reference implementation
-lab/                Licensing lab single-page app (in progress)
+js/sim.js           Lab simulation layer (slider params -> evidence streams) + presets
+lab/src/            Lab source (style.css, body.html, app.js)
+lab/build.mjs       Build: inlines the engine, emits index.html + artifact.html
+lab/index.html      Licensing lab, self-contained (open directly or serve)
 r/                  ovmg R package (in progress)
 tests/fixtures/     Shared JSON fixtures (paper Figure 4 values)
-tests/run-fixtures.mjs   JS fixture runner
+tests/              JS fixture runner + sim smoke tests
 notes/              Project brief, source verification
 ```
 
-## Test
+## Build and test
 
 ```bash
-make test    # runs node tests/run-fixtures.mjs
+make test    # engine fixtures + sim smoke tests
+make lab     # rebuild lab/index.html and lab/artifact.html from lab/src/
 ```
+
+Edit the lab under `lab/src/`; `lab/index.html` is generated. The smoke tests
+prove the preempted-gap and starved presets reproduce Figure 4 through the
+slider mapping and pin the framing rank order and the moribund
+dispersion-before-mean profile.
 
 The fixtures reproduce the plotted values of the paper's Figure 4 (Beta(1,1)
 prior; per-step preemption mass 0.01 "rare" vs 5 "dense"), verified against

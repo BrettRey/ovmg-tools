@@ -1,23 +1,31 @@
 # STATUS
 
-## Current state (2026-07-09)
+## Current state (2026-07-09, later)
 
-Project scaffolded. JS engine (`js/engine.js`) implements the paper's
-discounted Beta filter (eqs. 44-47) with omission-mass helper, summaries, and
-Beta quantiles. Shared fixture suite (`tests/fixtures/fig4-preemption.json`)
-reproduces the paper's Figure 4 values; all 27 checks pass (`make test`).
-Fixture values verified against `section3.tex` pgfplots coordinates and the
-Beta(1,b) closed-form quantiles.
+Licensing lab Tab 1 built and working. `lab/index.html` (built by `make lab`
+from `lab/src/` + the shared engine): worked-example presets (licensed,
+preempted gap, starved, winnerless cell, moribund contrast), five evidence
+sliders, framing-shift button, playback, posterior trajectory with 95% CrI
+ribbon, and the fig. 2 state space with region boxes and engine-computed
+ghost markers for each preset. Light/dark themes, validated palettes, hover
+tooltips, data table. Prototype artifact published:
+https://claude.ai/code/artifact/70c3f5f1-6223-476d-a933-01e93abda97c
+
+Tests: 27 engine fixture checks + 38 sim smoke checks pass (`make test`).
+The smoke suite proves the preempted/starved presets reproduce Figure 4
+through the slider mapping, and pins the framing rank order (starved jumps,
+preempted pinned) and the moribund dispersion-before-mean profile.
+
+JS engine (`js/engine.js`): the paper's discounted Beta filter (eqs. 44-47)
+with omission-mass helper, summaries, and Beta quantiles; fixtures verified
+against `section3.tex` pgfplots coordinates and Beta(1,b) closed forms.
 
 ## Next action
 
-Licensing lab Tab 1 (single node): sliders (opportunity rate N, rho-star,
-positive-token rate, outside-option share, memory discount delta_m), posterior
-trajectory with credible ribbon, live dot in the (mean, concentration) state
-space, framing button, worked-example presets. Single-file HTML/JS wrapping
-`js/engine.js`.
-
-Then: Tab 2 (population, ~50 agents) -> Tab 3 (diagnostic walkthrough).
+Tab 2 (population): ~50 agents on sampled input streams, histogram of
+individual means bimodalizing, repair-coupling toggle; makes the
+epistemic-vs-heterogeneity distinction visible. Then Tab 3 (diagnostic
+walkthrough). Consider GitHub Pages enablement once Tab 2 lands.
 R package functions in build order: `niche_annotate()`,
 `rate_per_opportunity()`, `rho_star()`, `fit_licensing()`,
 `classify_regime()`, `dispersion_probe()`.

@@ -26,3 +26,25 @@ the generator.
 
 2026-07-09 — Deferred: whether `ovmg` ships as a standalone R package or a
 module in `tools/kindred`. The brief leaves it open; decide when R work starts.
+
+2026-07-09 — Lab is built from `lab/src/` by `lab/build.mjs`, which inlines
+`js/engine.js` verbatim (single-source law: the build copies, never forks) and
+emits `lab/index.html` (self-contained; file:// and GitHub Pages) plus
+`lab/artifact.html` (content-only, for claude.ai artifact publishing). The
+combined script is node --check'd at build time.
+
+2026-07-09 — Tab-1 slider-to-stream mapping (lab modelling convention, not
+paper math): s = N·π; p = N·(1−π)·(1−ω)·ρ⋆; e = 0; deterministic
+expectation-level updates, sampling noise deferred to Tab 2. Preempted and
+starved preset parameters chosen so those presets reproduce Figure 4 exactly;
+enforced by tests/run-sim-smoke.mjs.
+
+2026-07-09 — Lab display conventions: status chip uses ν < 8 (diffuse) and
+ν ≥ 40 (concentrated) with C ≥ 0.75 licensed / C ≤ 0.25 excluded; starved vs
+avoidance-divided split on cumulative opportunities < 10; framing shift = +2
+positive pseudo-counts. Display conventions for the readout only, not paper
+claims; the smoke tests pin the rank-order behaviour they illustrate.
+
+2026-07-09 — Chart palettes validated with the dataviz six-checks script:
+light #2E6E9E/#B4533A on #FBFBF9; dark #4A8BC4/#C96A4E on #16181D. All pass
+(CVD ΔE ≥ 49; contrast ≥ 3:1).

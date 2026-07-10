@@ -23,12 +23,18 @@ JS engine (`js/engine.js`): the paper's discounted Beta filter (eqs. 44-47)
 with omission-mass helper, summaries, and Beta quantiles; fixtures verified
 against `section3.tex` pgfplots coordinates and Beta(1,b) closed forms.
 
+**Not signed off.** Brett's verdict on the rebuilt Tab 1 (2026-07-09, end of
+session): "needs work". The interpretability rebuild improved things but did
+not clear the bar; no specifics were given before the session ended.
+
 ## Next action
 
-Tab 2 (population): ~50 agents on sampled input streams, histogram of
-individual means bimodalizing, repair-coupling toggle; makes the
-epistemic-vs-heterogeneity distinction visible. Then Tab 3 (diagnostic
-walkthrough). Consider GitHub Pages enablement once Tab 2 lands.
+Another interpretability pass on Tab 1, starting by getting Brett's specific
+friction points (which element still doesn't explain itself). Do NOT proceed
+to Tab 2 until Tab 1 is signed off; Tab 2 inherits Tab 1's display language.
+
+Then: Tab 2 (population, epistemic-vs-heterogeneity), Tab 3 (diagnostic
+walkthrough), GitHub Pages enablement.
 R package functions in build order: `niche_annotate()`,
 `rate_per_opportunity()`, `rho_star()`, `fit_licensing()`,
 `classify_regime()`, `dispersion_probe()`.
